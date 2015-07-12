@@ -1,14 +1,16 @@
-<h1>Login or <a href="/signup">Sign up</a></h1>
-  <form method="POST" action="/login">
-  	<div>
-        <label>Username:</label>
-        <input type="text" name="name"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <input type="submit" value="submit">
-    </div>
-</form>
+<div class="container">
+    
+    <form class="form-signin" action="/login" method="POST">
+        <h2 class="form-signin-heading">Login o <a href="/signup">Registrate</a></h2>
+        
+        <label for="name" class="sr-only">Username</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="username" required="true" autofocus="">
+
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true">
+
+        <br/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Registrar</button>
+    </form>
+
+</div>

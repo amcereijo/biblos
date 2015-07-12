@@ -1,6 +1,13 @@
 <!-- Default home page -->
 <link type="text/css" href='http://sailsjs.org/styles/fonts.css' rel='stylesheet'/>
 <style>
+.table tbody>tr:nth-child(odd){ 
+    background: white;
+  }
+  /*  Define the background color for all the EVEN background rows  */
+  .table tbody>tr:nth-child(even){
+    background: #ddd;
+  }
 </style>
 <script type="text/javascript">
 </script>
@@ -9,27 +16,27 @@
   
 <div id="main" class="container panel panel-default"  ng-app="biblos" ng-controller="MainController">
 
+  <div id="head" role="head">
+  <h3>Realizar pedido</h3>
+  </div>
+
   <div class="panel panel-default">
     
     <div class="panel-heading" ng-init="init(<%=dataUpdate%>)">
-        <form class="form-inline">
+        <form class="form-inline" name="formAddProduct">
             <div class="form-group">
                 <label for="selectedProduct">Producto:</label>
-                <select class="form-control" id="selectedProduct" ng-model="seletedProduct">
-                    <option selected="true">- selecciona producto -</option>
-                    <option ng-repeat="p in products">
+                <select name="selectAddProduct" class="form-control" id="selectedProduct" ng-model="selectedProduct" required>
+                    <option ng-repeat="p in products" value="{{$index}}">
                       {{p.name}} - {{p.price}}€
                     </option>
                 </select>
-                <button type="button" class="btn btn-default" ng-click="showHideProducts(!showAllProducts)" aria-label="Left Align">
+                <button type="button" class="btn btn-primary" ng-click="showHideProducts(!showAllProducts)" aria-label="Left Align">
                     {{!showAllProducts?'Ver todos':'Ocultar'}}
                 </button>
-                <label for="productAmount"></label>
-                <select id="productAmount" ng-model="productAmount" class="form-control">
-                    <option ng-repeat="n in [1,2,3,4,5,6,7,8,9,10]">
-                        {{n}}
-                    </option>
-                </select>
+                <label for="productAmount">Cantidad</label>
+                <select id="productAmount" ng-model="productAmount" class="form-control" ng-options="n for n in [1,2,3,4,5,6,7,8,9,10]"  required></select>
+                <button type="button" class="btn btn-success" ng-disabled="formAddProduct.$invalid" ng-click="addProduct()">Añadir</button>
             </div>
             
         </form>
@@ -42,13 +49,13 @@
             <th>#</th>
             <th>Nombre</th>
             <th>Observaciones</th>
-            <th>Precio</th>
+            <th>Precio €</th>
             <th></th>
           </tr>
         </thead>
         
         <tbody>
-          <tr ng-repeat="p in products">
+          <tr ng-repeat="p in products" ng-click="selectProduct($index)">
             <th scope="row">{{p.id}}</th> <!-- remove show value -->
             <td>{{p.name}}</td>
             <td>{{p.observations}}</td>
@@ -67,21 +74,21 @@
   </div>  
   <div class="panel-body">
     <!-- Table -->
-    <table class="table" ng-show="showAllProducts">
+    <table class="table">
       <thead>
         <tr>
-          <th>#</th>
           <th>Nombre</th>
           <th>Precio</th>
-          <th></th>
+          <th>Cantidad</th>
+          <th>Total €</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="p in products">
-          <th scope="row">{{p.id}}</th> <!-- remove show value -->
-          <td>{{p.name}}</td>
-          <td>{{p.price}}</td>
-          <td></td>
+        <tr ng-repeat="o in orders" ng-class="">
+          <td>{{o.product.name}}</td>
+          <td>{{o.product.price}}€</td>
+          <td>{{o.amount}}</td>
+          <td>{{o.product.price * o.amount}}</td>
         </tr>
       </tbody>
     </table>

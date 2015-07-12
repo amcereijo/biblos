@@ -1,0 +1,25 @@
+<div class="container">
+	
+	<h2>Administración de productos </h2>
+
+	<form class="form" action="/product" method="POST">
+        <h4 class="form-heading">Nuevo producto</h4>
+        
+        <label for="name" class="sr-only">Nombre</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="nombre" required="true" autofocus="">
+
+        <label for="price" class="sr-only">Precio</label>
+        <input type="text" id="price" name="price" class="form-control" placeholder="precio" required="true" autofocus="">
+        <br/>
+        <button class="btn btn-lg btn-primary" type="submit">Crear</button>
+
+     </form>
+
+    <hr/>
+	<% products.forEach(function(product) { %>
+        <li><%= product.name %> - <%= product.price %>€ <input type="button" class="btn btn-primary editProduct" value="Editar"> <input type="button" class="btn btn-primary deleteProduct" value="Eliminar"> </li>
+    <% }); %>
+
+
+</div>
+

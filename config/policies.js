@@ -51,10 +51,16 @@ module.exports.policies = {
 
   'ProductController': {
     'edit':'isAuthenticated',
-    'create': 'isAuthenticated'
+    'create': 'isAuthenticated',
+    'delete': 'isAuthenticated',
+    'admin': 'isAuthenticated'
   },
 
   'UserController': {
+    '*': 'isAuthenticated'
+  },
+
+  'AdminController': {
     '*': 'isAuthenticated'
   }
  

@@ -7,16 +7,37 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-    User.findOne({ id: id } , function (err, user) {
+	done(null, users[id]);
+    /*User.findOne({ id: id } , function (err, user) {
         done(err, user);
-    });
+    });*/
 });
+var USER = 'admin', PASS = 'admin';
+var users = {};
 
 passport.use(new LocalStrategy({
     usernameField: 'name',
     passwordField: 'password'
   },
   function(name, password, done) {
+
+  	if(name === USER && password === PASS) {
+  		var returnUser = {
+            name: name,
+            id: new Date().getMilliseconds()
+          };
+          users[returnUser.id] = returnUser;
+          return done(null, returnUser, {
+            message: 'Logged In Successfully'
+          });
+  	} else {
+  		return done(null, false, {
+          message: 'Invalid login'
+        });
+  	}
+
+
+/*
 
     User.findOne({ name: name }, function (err, user) {
       if (err) { return done(err); }
@@ -40,5 +61,6 @@ passport.use(new LocalStrategy({
           });
         });
     });
+*/
   }
 ));
