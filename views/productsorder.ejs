@@ -31,7 +31,7 @@
                       {{p.name}} - {{p.price}}€
                     </option>
                 </select>
-                <button type="button" class="btn btn-primary" ng-click="showHideProducts(!showAllProducts)" aria-label="Left Align">
+                <button type="button" class="btn btn-primary" ng-click="showAllProducts = !showAllProducts" aria-label="Left Align">
                     {{!showAllProducts?'Ver todos':'Ocultar'}}
                 </button>
                 <label for="productAmount">Cantidad</label>

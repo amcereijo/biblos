@@ -53,10 +53,6 @@ biblosapp.controller('MainController',['$http','$scope', function($http, $scope)
 		}
 	};
 
-	controller.showHideProducts = function(show) {
-		controller.showAllProducts = show;
-	};
-
 	controller.addProduct = function() {
 		var product = controller.products[controller.selectedProduct],
 			order = {
@@ -67,15 +63,22 @@ biblosapp.controller('MainController',['$http','$scope', function($http, $scope)
 		controller.productAmount = 1;
 		controller.orders.push(order);
 		setOrderTableDisabled();
+
 	};
 
 	controller.selectProduct = function(id) {
 		controller.selectedProduct = ""+id;
-		controller.showHideProducts(false);
+		controller.showAllProducts = false;
 	};
 
 	controller.removeProduct = function(order) {
 		controller.orders.pop(order);
+		setOrderTableDisabled();
+	};
+
+	controller.makeOrder = function() {
+		//$http post order
+		//clean orders
 	}
 	
 }]);
