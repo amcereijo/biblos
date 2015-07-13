@@ -17,7 +17,7 @@
 <div id="main" class="container panel panel-default"  ng-app="biblos" ng-controller="MainController">
 
   <div id="head" role="head">
-  <h3>Realizar pedido</h3>
+    <h3>Realizar pedido</h3>
   </div>
 
   <div class="panel panel-default">
@@ -26,7 +26,7 @@
         <form class="form-inline" name="formAddProduct">
             <div class="form-group">
                 <label for="selectedProduct">Producto:</label>
-                <select name="selectAddProduct" class="form-control" id="selectedProduct" ng-model="selectedProduct" required>
+                <select name="selectAddProduct" id="selectAddProduct" class="form-control" id="selectedProduct" ng-model="selectedProduct" required>
                     <option ng-repeat="p in products" value="{{$index}}">
                       {{p.name}} - {{p.price}}€
                     </option>
@@ -59,7 +59,7 @@
             <th scope="row">{{p.id}}</th> <!-- remove show value -->
             <td>{{p.name}}</td>
             <td>{{p.observations}}</td>
-            <td>{{p.price}}</td>
+            <td>{{p.price}}€</td>
             <td></td>
           </tr>
         </tbody>
@@ -74,13 +74,14 @@
   </div>  
   <div class="panel-body">
     <!-- Table -->
-    <table class="table">
+    <table class="table" id="orderTable">
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Precio</th>
+          <th>Precio €</th>
           <th>Cantidad</th>
           <th>Total €</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -88,12 +89,17 @@
           <td>{{o.product.name}}</td>
           <td>{{o.product.price}}€</td>
           <td>{{o.amount}}</td>
-          <td>{{o.product.price * o.amount}}</td>
+          <td>{{o.product.price * o.amount}}€</td>
+          <td><button type="button" class="btn btn-danger" ng-click="removeProduct(o)">-</button></td>
         </tr>
       </tbody>
     </table>
+    <p class="text-right">
+      <button type="button" class="btn btn-success" ng-disabled="orderTableDisabled" ng-click="makeOrder()">Realizar Pedido</button>
+    </p>
+    
   </div>
-  </div>
+
 </div>
 
 

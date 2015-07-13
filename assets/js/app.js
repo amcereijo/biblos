@@ -1,12 +1,18 @@
 var biblosapp = angular.module('biblos', []);
 
 biblosapp.controller('MainController',['$http','$scope', function($http, $scope) {
-	var controller = $scope;
+	var controller = $scope,
+		setOrderTableDisabled = function() {
+			controller.orderTableDisabled = (controller.orders.length === 0);
+		};
 	controller.products = [];
 	controller.showAllProducts = false;
 	controller.selectedProduct = '';//- selecciona producto -';
 	controller.productAmount = 1;
 	controller.orders = [];
+	controller.orderTableDisabled = true;
+
+
 
 	controller.init = function (dataUpdate) {
 		var storeDataUpdate = (localStorage && localStorage.dataUpdate) ? localStorage.dataUpdate : 0;
@@ -60,12 +66,16 @@ biblosapp.controller('MainController',['$http','$scope', function($http, $scope)
 		controller.selectedProduct = '';
 		controller.productAmount = 1;
 		controller.orders.push(order);
+		setOrderTableDisabled();
 	};
 
 	controller.selectProduct = function(id) {
-		//controller.selectAddroduct
-		//document.getElementsByName('selectAddProduct').selectedIndex = id;
-		controller.selectedProduct = controller.products[id].name + ' - ' + controller.products[id].price +'€'; //{{p.name}} - {{p.price}}€
+		controller.selectedProduct = ""+id;
+		controller.showHideProducts(false);
+	};
+
+	controller.removeProduct = function(order) {
+		controller.orders.pop(order);
 	}
 	
 }]);
