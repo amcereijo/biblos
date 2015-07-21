@@ -9,6 +9,12 @@
   .table tbody>tr:nth-child(even){
     background: #ddd;
   }
+  div.row{
+    padding-top: 4px;
+  }
+  .class100Percent {
+    width: 100%
+  }
 </style>
 
 <!-- Angular Material Dependencies -->
@@ -34,7 +40,7 @@
         <form class="form-inline" name="formAddProduct">
             
 
-              <div layout="row" layout-fill >
+              <div  class="row" layout="row" layout-fill >
                 <div flex="25">
                   <label for="selectedProduct">Producto:</label>
                 </div>
@@ -50,13 +56,21 @@
                 </div>
               </div>
 
-              <div layout="row" layout-fill >
+              <div  class="row" layout="row" layout-fill >
                 <div flex="25">
                   <label for="productAmount">Cantidad</label>
                 </div>
                 <div flex="75">
                   <select id="productAmount" ng-model="formData.productAmount" class="form-control" ng-options="n for n in [1,2,3,4,5,6,7,8,9,10]"  required></select>
-                  <button type="button" class="btn btn-success" ng-disabled="formAddProduct.$invalid" ng-click="addProduct()">Añadir</button>
+                  
+                </div>
+              </div>
+
+              <div class="row" layout="row" layout-fill >
+                <div flex="25">
+                </div>
+                <div flex="75">
+                <button type="button"  class="btn btn-success class100Percent" ng-disabled="formAddProduct.$invalid" ng-click="addProduct()">Añadir</button>
                 </div>
               </div>
                 
