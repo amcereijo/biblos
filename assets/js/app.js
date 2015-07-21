@@ -29,7 +29,7 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 	    		.filter(function(pos) { return toastPosition[pos]; })
 	    		.join(' ');
 	  	};
-	  	
+
 	controller.formData = {};
 	controller.formData.products = [];
 	controller.formData.showAllProducts = false;
@@ -107,7 +107,7 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 			position = getToastPosition();
 		showConfirm(evt, function(){
 			//$http post order
-			controller.orders = [];
+			controller.formData.orders = [];
 			md.show(
 		      md.simple()
 		        .content('Pedido realizado!')
