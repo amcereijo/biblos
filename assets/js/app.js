@@ -1,16 +1,42 @@
-var biblosapp = angular.module('biblos', []);
+var biblosapp = angular.module('biblos', ['ngMaterial']);
 
-biblosapp.controller('MainController',['$http','$scope', function($http, $scope) {
+biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast', '$animate', function($http, $scope, $mdDialog,$mdToast, $animate) {
 	var controller = $scope,
+		mdDialog = $mdDialog,
 		setOrderTableDisabled = function() {
-			controller.orderTableDisabled = (controller.orders.length === 0);
-		};
-	controller.products = [];
-	controller.showAllProducts = false;
-	controller.selectedProduct = '';//- selecciona producto -';
-	controller.productAmount = 1;
-	controller.orders = [];
-	controller.orderTableDisabled = true;
+			controller.formData.orderTableDisabled = (controller.formData.orders.length === 0);
+		},
+		showConfirm = function(ev, okFn, cancelFn) {
+		    // Appending dialog to document.body to cover sidenav in docs app
+		    var confirm = mdDialog.confirm()
+		      .parent(angular.element(document.body))
+		      .title('¿Realizar pedido?')
+		      //.content('Vas a pedir: ' + controller.orders)
+		      .ok('Si')
+		      .cancel('No')
+		      .targetEvent(ev);
+
+		    mdDialog.show(confirm).then(okFn, cancelFn);
+		},
+		toastPosition = {
+		    bottom: true,
+		    top: false,
+		    left: false,
+		    right: false
+		},
+		getToastPosition = function() {
+		    return Object.keys(toastPosition)
+	    		.filter(function(pos) { return toastPosition[pos]; })
+	    		.join(' ');
+	  	};
+	  	
+	controller.formData = {};
+	controller.formData.products = [];
+	controller.formData.showAllProducts = false;
+	controller.formData.selectedProduct = '';//- selecciona producto -';
+	controller.formData.productAmount = 1;
+	controller.formData.orders = [];
+	controller.formData.orderTableDisabled = true;
 
 
 
@@ -20,17 +46,17 @@ biblosapp.controller('MainController',['$http','$scope', function($http, $scope)
 			
 			//retrieve products
 			io.socket.get('/product', function(data) {
-				controller.products = data;
+				controller.formData.products = data;
 				controller.$apply();
 				localStorage.setItem('dataUpdate', dataUpdate);
 				localStorage.setItem('products', JSON.stringify(data));
 			});
 
 			//listen changes
-			io.socket.on('product', function(evt){
+			io.socket.on('product', function(evt) {
 				switch(evt.verb){
 					case 'created':
-						controller.products.push(evt.data);
+						controller.formData.products.push(evt.data);
 						controller.$apply();
 						localStorage.setItem('dataUpdate', dataUpdate); //TODO
 						localStorage.setItem('products', JSON.stringify(data));
@@ -54,31 +80,46 @@ biblosapp.controller('MainController',['$http','$scope', function($http, $scope)
 	};
 
 	controller.addProduct = function() {
-		var product = controller.products[controller.selectedProduct],
+		var product = controller.formData.products[controller.formData.selectedProduct],
 			order = {
 				product: product,
-				amount: controller.productAmount
+				amount: controller.formData.productAmount
 			};
-		controller.selectedProduct = '';
-		controller.productAmount = 1;
-		controller.orders.push(order);
+		controller.formData.selectedProduct = '';
+		controller.formData.productAmount = 1;
+		controller.formData.orders.push(order);
 		setOrderTableDisabled();
 
 	};
 
 	controller.selectProduct = function(id) {
-		controller.selectedProduct = ""+id;
-		controller.showAllProducts = false;
+		controller.formData.selectedProduct = ""+id;
+		controller.formData.showAllProducts = false;
 	};
 
 	controller.removeProduct = function(order) {
-		controller.orders.pop(order);
+		controller.formData.orders.pop(order);
 		setOrderTableDisabled();
 	};
 
-	controller.makeOrder = function() {
-		//$http post order
-		//clean orders
+	controller.makeOrder = function(evt) {
+		var md = $mdToast,
+			position = getToastPosition();
+		showConfirm(evt, function(){
+			//$http post order
+			controller.orders = [];
+			md.show(
+		      md.simple()
+		        .content('Pedido realizado!')
+		        .position(position)
+		        .hideDelay(2000)
+		    );
+			//show confirmation	
+		}, function(){/*do nothing*/});
+
 	}
+
+
+
 	
 }]);
