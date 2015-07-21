@@ -28,7 +28,7 @@
     <h3>Realizar pedido</h3>
   </div>
 
-  <div class="panel panel-default">
+  <div class="panel panel-default" ng-cloak>
     
     <div class="panel-heading" ng-init="init(<%=dataUpdate%>)">
         <form class="form-inline" name="formAddProduct">
@@ -92,10 +92,10 @@
   </div>
 
 
-  <div class="panel-heading" >
+  <div class="panel-heading" ng-cloak>
     Pedido    
   </div>  
-  <div class="panel-body">
+  <div class="panel-body" ng-cloak>
     <!-- Table -->
     <table class="table" id="orderTable">
       <thead>
