@@ -32,20 +32,35 @@
     
     <div class="panel-heading" ng-init="init(<%=dataUpdate%>)">
         <form class="form-inline" name="formAddProduct">
-            <div class="form-group">
-                <label for="selectedProduct">Producto:</label>
-                <select name="selectAddProduct" id="selectAddProduct" class="form-control" id="selectedProduct" ng-model="formData.selectedProduct" required>
-                    <option ng-repeat="p in formData.products" value="{{$index}}">
-                      {{p.name}} - {{p.price}}€
-                    </option>
-                </select>
-                <button type="button" class="btn btn-primary" ng-click="showAllProducts = !showAllProducts" aria-label="Left Align">
-                    {{!formData.showAllProducts?'Ver todos':'Ocultar'}}
-                </button>
-                <label for="productAmount">Cantidad</label>
-                <select id="productAmount" ng-model="formData.productAmount" class="form-control" ng-options="n for n in [1,2,3,4,5,6,7,8,9,10]"  required></select>
-                <button type="button" class="btn btn-success" ng-disabled="formAddProduct.$invalid" ng-click="addProduct()">Añadir</button>
-            </div>
+            
+
+              <div layout="row" layout-fill >
+                <div flex="25">
+                  <label for="selectedProduct">Producto:</label>
+                </div>
+                <div flex="75">
+                  <select name="selectAddProduct" id="selectAddProduct" class="form-control" id="selectedProduct" ng-model="formData.selectedProduct" required>
+                      <option ng-repeat="p in formData.products" value="{{$index}}">
+                        {{p.name}} - {{p.price}}€
+                      </option>
+                  </select>
+                  <button type="button" class="btn btn-primary" ng-click="showAllProducts = !showAllProducts" aria-label="Left Align">
+                      {{!formData.showAllProducts?'Ver todos':'Ocultar'}}
+                  </button>
+                </div>
+              </div>
+
+              <div layout="row" layout-fill >
+                <div flex="25">
+                  <label for="productAmount">Cantidad</label>
+                </div>
+                <div flex="75">
+                  <select id="productAmount" ng-model="formData.productAmount" class="form-control" ng-options="n for n in [1,2,3,4,5,6,7,8,9,10]"  required></select>
+                  <button type="button" class="btn btn-success" ng-disabled="formAddProduct.$invalid" ng-click="addProduct()">Añadir</button>
+                </div>
+              </div>
+                
+            
             
         </form>
     </div>  
