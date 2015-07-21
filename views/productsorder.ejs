@@ -44,7 +44,7 @@
                         {{p.name}} - {{p.price}}€
                       </option>
                   </select>
-                  <button type="button" class="btn btn-primary" ng-click="showAllProducts = !showAllProducts" aria-label="Left Align">
+                  <button type="button" class="btn btn-primary" ng-click="formData.showAllProducts = !form.DatashowAllProducts" aria-label="Left Align">
                       {{!formData.showAllProducts?'Ver todos':'Ocultar'}}
                   </button>
                 </div>
@@ -66,7 +66,7 @@
     </div>  
     <div class="panel-body">
       <!-- Table -->
-      <table class="table" ng-show="showAllProducts">
+      <table class="table" ng-show="formData.showAllProducts">
         <thead>
           <tr>
             <th>#</th>
@@ -78,7 +78,7 @@
         </thead>
         
         <tbody>
-          <tr ng-repeat="p in products" ng-click="selectProduct($index)">
+          <tr ng-repeat="p in formData.products" ng-click="selectProduct($index)">
             <th scope="row">{{p.id}}</th> <!-- remove show value -->
             <td>{{p.name}}</td>
             <td>{{p.observations}}</td>
