@@ -119,6 +119,10 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 
 	}
 
+	controller.changeAmmount = function(value) {
+		controller.formData.productAmount += value;
+	}
+
 
 
 	
