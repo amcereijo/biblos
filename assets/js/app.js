@@ -28,17 +28,25 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 		    return Object.keys(toastPosition)
 	    		.filter(function(pos) { return toastPosition[pos]; })
 	    		.join(' ');
-	  	};
+	  	},
+	  	setFirstProductSelected = function() {
+	  		controller.formData.selectedProduct = 0;
+		};
 
 	controller.formData = {};
 	controller.formData.products = [];
 	controller.formData.showAllProducts = false;
-	controller.formData.selectedProduct = '';//- selecciona producto -';
+	controller.formData.selectedProduct;//- selecciona producto -';
 	controller.formData.productAmount = 1;
 	controller.formData.orders = [];
 	controller.formData.orderTableDisabled = true;
+	controller.formData.showClientData = '';
+	controller.formData.clientName = '';
+	controller.formData.clientComments = '';
 
-
+	controller.passToClientData = function(show) {
+		controller.formData.showClientData = show;
+	}
 
 	controller.init = function (dataUpdate) {
 		var storeDataUpdate = (localStorage && localStorage.dataUpdate) ? localStorage.dataUpdate : 0;
@@ -47,16 +55,18 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 			//retrieve products
 			io.socket.get('/product', function(data) {
 				controller.formData.products = data;
+				setFirstProductSelected();
 				controller.$apply();
-				localStorage.setItem('dataUpdate', dataUpdate);
+				localStorage.setItem('dataUpdate',dataUpdate);
 				localStorage.setItem('products', JSON.stringify(data));
 			});
 
 			//listen changes
-			io.socket.on('product', function(evt) {
+			io.socket.on('product', function(evt)  {
 				switch(evt.verb){
 					case 'created':
 						controller.formData.products.push(evt.data);
+						setFirstProductSelected();
 						controller.$apply();
 						localStorage.setItem('dataUpdate', dataUpdate); //TODO
 						localStorage.setItem('products', JSON.stringify(data));
@@ -68,6 +78,7 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 								i = l;
 							}
 						}
+						setFirstProductSelected();
 						controller.$apply();
 						localStorage.setItem('dataUpdate', dataUpdate);//TODO
 						localStorage.setItem('products', JSON.stringify(data));
@@ -85,7 +96,7 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 				product: product,
 				amount: controller.formData.productAmount
 			};
-		controller.formData.selectedProduct = '';
+		setFirstProductSelected();
 		controller.formData.productAmount = 1;
 		controller.formData.orders.push(order);
 		setOrderTableDisabled();
@@ -102,10 +113,17 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 		setOrderTableDisabled();
 	};
 
+
+	controller.checkOwnData = function(evt) {
+		return (controller.formData.clientName === '' ||
+			controller.formData.clientComments === '');
+	}
 	controller.makeOrder = function(evt) {
 		var md = $mdToast,
-			position = getToastPosition();
+			position = getToastPosition(),
+			hideClientData = controller.passToClientData;
 		showConfirm(evt, function(){
+			hideClientData(false);
 			//$http post order
 			controller.formData.orders = [];
 			md.show(
