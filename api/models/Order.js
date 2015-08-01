@@ -8,6 +8,18 @@
 module.exports = {
 
   attributes: {
+  	products: {
+  		type: 'array',
+  		required: true
+  	},
+  	clientName: {
+  		type: 'string',
+  		required: true
+  	},
+  	comments: {
+  		type: 'string'
+  	}
   }
+  
 };
 
