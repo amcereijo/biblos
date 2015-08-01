@@ -19,7 +19,12 @@ module.exports = {
   	comments: {
   		type: 'string'
   	}
-  }
-  
+  },
+
+  afterCreate: function(order, cb) {
+  		console.log('Just created an order:' + JSON.stringify(order));
+        cb();
+    }
+
 };
 
