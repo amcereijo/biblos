@@ -122,6 +122,7 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 		var md = $mdToast,
 			position = getToastPosition(),
 			hideClientData = controller.passToClientData;
+
 		showConfirm(evt, function(){
 			hideClientData(false);
 			//$http post order
@@ -138,21 +139,27 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 				}
 			};
 			$http(req).then(
-				function() {console.log('POST SUCCESS!!')}, 
+				function() {
+					controller.formData.orders = [];
+					controller.formData.clientName = '';
+					controller.formData.clientComments = '';
+
+					md.show(
+				      md.simple()
+				        .content('Pedido realizado!')
+				        .position(position)
+				        .hideDelay(2000)
+				    );
+					//show confirmation	
+					console.log('POST SUCCESS!!')
+
+				}, 
 				function(err) {
 					console.log("POST ERROR!! : %s", err);
 				}
 			);
 
 
-			controller.formData.orders = [];
-			md.show(
-		      md.simple()
-		        .content('Pedido realizado!')
-		        .position(position)
-		        .hideDelay(2000)
-		    );
-			//show confirmation	
 		}, function(){/*do nothing*/});
 
 	}
