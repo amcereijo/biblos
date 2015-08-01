@@ -125,6 +125,26 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 		showConfirm(evt, function(){
 			hideClientData(false);
 			//$http post order
+			
+			var req = {
+				method: 'POST',
+				url: '/order',
+				headers: {
+				},
+				data: {
+					products: controller.formData.orders,
+					clientName: controller.formData.clientName,
+					comments: controller.formData.clientComments
+				}
+			};
+			$http(req).then(
+				function() {console.log('POST SUCCESS!!')}, 
+				function(err) {
+					console.log("POST ERROR!! : %s", err);
+				}
+			);
+
+
 			controller.formData.orders = [];
 			md.show(
 		      md.simple()
