@@ -21,4 +21,10 @@ module.exports = {
   //   connection: 'someMongodbServer'
   // }
 
+  // parse platform
+  parse: {
+  	appId: '',
+  	httpApiId: ''
+  }
+
 };

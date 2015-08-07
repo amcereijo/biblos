@@ -35,4 +35,10 @@ module.exports = {
   //   level: "silent"
   // }
 
+  // parse platform
+  parse: {
+    appId: '',
+    httpApiId: ''
+  }
+
 };
