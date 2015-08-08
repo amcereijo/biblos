@@ -20,6 +20,41 @@ function loadAndShowProducts(res) {
 	});
 }
 
+function createProducts(uploadedFile, res) {
+	console.log('file: ' + JSON.stringify(uploadedFile));
+	var rdInstance = readline.createInterface({
+	    input: fs.createReadStream(uploadedFile.fd),
+	    output: process.stdout,
+	    terminal: false
+	});
+
+	rdInstance.on('line', function(line) {
+	    var data = line.split(':'),
+		    productName = data[0].trim(),
+		    price = data[1].trim(),
+		    desc = (data[2] || '').trim(),
+		    product;
+
+	    console.log('Product:%s - Price:%s', productName, price);
+	    product = {name: productName, price: price, desc: desc};
+		Product.create(product).exec(function createCB(err, createdProduct){
+		  console.log('Created product: %s' + JSON.stringify(createdProduct));
+		});
+	});
+
+	rdInstance.on('close', function(line) {
+	    console.log('END!!');
+	    res.redirect('/admin/product');
+	});	
+}
+
+function removeAllProducts(uploadedFile, res) {
+	Product.destroy({}).exec(function deleteCB(err){
+		console.log('The record has been deleted');
+		createProducts(uploadedFile, res);
+	});
+}
+
 module.exports = {
 
 	order: function(req, res) {
@@ -38,33 +73,14 @@ module.exports = {
 				// don't allow the total upload size to exceed ~10MB
 				maxBytes: 10000000
 			}, function whenDone(err, uploadedFiles) {
-				var rdInstance; 
 				if (err) {
 				  return res.negotiate(err);
 				}
-
 				// If no files were uploaded, respond with an error.
-				if (uploadedFiles.length === 0){
+				if (uploadedFiles.length === 0) {
 				  return res.badRequest('No file was uploaded');
 				}
-
-				console.log('file: ' + JSON.stringify(uploadedFiles[0]));
-
-				var rdInstance = readline.createInterface({
-				    input: fs.createReadStream(uploadedFiles[0].fd),
-				    output: process.stdout,
-				    terminal: false
-				});
-
-				rdInstance.on('line', function(line) {
-				    console.log(line);
-				    //TODO insert products
-				});
-
-				rdInstance.on('close', function(line) {
-				    console.log('END!!');
-				    res.redirect('/admin/product');
-				});				
+				removeAllProducts(uploadedFiles[0], res);
 		});
 	}
 };
