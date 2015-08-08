@@ -5,6 +5,8 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+var parseService = require('../services/parseService/ParseService');
+
 module.exports = {
 
   attributes: {
@@ -22,6 +24,7 @@ module.exports = {
   },
 
   afterCreate: function(order, cb) {
+  		parseService.sendNotification({order: order});
   		console.log('Just created an order:' + JSON.stringify(order));
         cb();
     }
