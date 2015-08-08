@@ -38,7 +38,8 @@ module.exports = {
   // parse platform
   parse: {
     appId: '',
-    httpApiId: ''
+    httpApiId: '',
+    androidUri: 'biblos://order'
   }
 
 };
