@@ -109,7 +109,8 @@ biblosapp.controller('MainController',['$http','$scope','$mdDialog', '$mdToast',
 	};
 
 	controller.removeProduct = function(order) {
-		controller.formData.orders.pop(order);
+		var index = controller.formData.orders.indexOf(order);
+		controller.formData.orders.splice(index, 1);
 		setOrderTableDisabled();
 	};
 
