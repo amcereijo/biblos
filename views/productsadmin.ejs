@@ -2,7 +2,16 @@
 	
 	<h2>Administración de productos </h2>
 
-	<form class="form" action="/product" method="POST">
+	<form class="form" action="/uploadProducts" method="POST" enctype="multipart/form-data">
+        <h4 class="form-heading">Sube fichero de productos</h4>
+        <input type="file" id="fileProducts" name="fileProducts" class="form-control" required="true" autofocus="">
+        <br/>
+        <button class="btn btn-lg btn-primary" type="submit">Subir</button>
+    </form>
+    
+    <hr width="100%" />
+
+    <form class="form" action="/product" method="POST">
         <h4 class="form-heading">Nuevo producto</h4>
         
         <label for="name" class="sr-only">Nombre</label>
