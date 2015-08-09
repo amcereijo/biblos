@@ -40,6 +40,10 @@ module.exports = {
     appId: '',
     httpApiId: '',
     androidUri: 'biblos://order'
+  },
+  admin: {
+    user: '',
+    password: ''
   }
 
 };
