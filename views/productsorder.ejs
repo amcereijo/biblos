@@ -2,7 +2,7 @@
 <link type="text/css" href='http://sailsjs.org/styles/fonts.css' rel='stylesheet'/>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
 <style>
-.table tbody>tr:nth-child(odd){ 
+  .table tbody>tr:nth-child(odd){ 
     background: white;
   }
   /*  Define the background color for all the EVEN background rows  */
@@ -15,6 +15,12 @@
   .class100Percent {
     width: 100%
   }
+  .bodyBiblos {
+    background-image: url('images/biblos.jpg')
+  }
+  .panel {
+    margin-top: 20px;
+  }
 </style>
 
 <!-- Angular Material Dependencies -->
@@ -26,7 +32,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
 
 
-<div class="container-fluid">
+<div class="container-fluid bodyBiblos">
   
   <div id="main" class="container panel panel-default"  ng-app="biblos" ng-controller="MainController">
   
