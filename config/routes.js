@@ -65,6 +65,8 @@ module.exports.routes = {
   'get /admin': 'AdminController.admin',
 
   'get /admin/product': 'ProductController.admin',
+  
+  'get /admin/orders': 'OrderController.admin',
 
   'post /uploadProducts': 'ProductController.uploadFileProducts'
 

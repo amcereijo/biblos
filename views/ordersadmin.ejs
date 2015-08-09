@@ -1,0 +1,50 @@
+<style>
+    table {
+        border-spacing: 2px;
+        border-collapse: inherit;
+    }
+    tr {
+        background-color: white;
+    }
+    th{
+        background-color: #D8D8D8;
+        text-align: center;
+    }
+    td {
+        background-color: #CEE3F6;
+        text-align: center;
+    }
+
+    .bgOdd {
+        background-color: #F7F2E0;
+    }
+</style>
+
+<div class="container">
+	
+	<h2>Administración de pedidos </h2>
+
+    <hr/>
+    <table cellspacing="10">
+        <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Total</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+        <% orders.forEach(function(order, index) { %>
+            <tr>
+                <td class="<%= index%2===0? '' : 'bgOdd' %>"><%= order.createdAt %></td>
+                <td class="<%= index%2===0? '' : 'bgOdd' %>"><%= order.clientName %></td>
+                <td class="<%= index%2===0? '' : 'bgOdd' %>"><%= order.total %>€</td>
+                <td class="<%= index%2===0? '' : 'bgOdd' %>"> <input type="button" class="btn btn-primary " value="Ver"> </td>
+                <td class="<%= index%2===0? '' : 'bgOdd' %>"> <input type="button" class="btn btn-danger " value="Borrar"> </td>
+            </tr>
+        <% }); %>
+    </table>
+	
+
+
+</div>
+

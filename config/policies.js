@@ -56,6 +56,10 @@ module.exports.policies = {
     'admin': 'isAuthenticated'
   },
 
+  'OrderController': {
+    'admin': 'isAuthenticated'
+  },
+
   'UserController': {
     '*': 'isAuthenticated'
   },

@@ -15,7 +15,7 @@ function loadAndShowProducts(res) {
 			console.log('"Errro admin.getProducts: ' + err);
 		},
 		success: function(products) {
-			res.view('productsadmin.ejs', {products: products});		
+			res.view('productsadmin.ejs', {products: products});
 		}
 	});
 }
