@@ -8,36 +8,51 @@ var config = require('../../../config/env/' + environment );
 var parseConfig = config.parse;
 var http = require('https');
 
-function sendNotification(notification) {
-	console.log('notification.order: %s', JSON.stringify(notification.order));
 
-	
-	var d = new Date(notification.order.createdAt);
-	var stringDate = [d.getHours(), ':', 
+function createdFormartedDate(order) {
+	var d = new Date(order.createdAt),
+		formatedDate = [d.getHours(), ':', 
 			(d.getMinutes()<10? '0'+d.getMinutes():d.getMinutes()), 
 			' del dia ',
 			d.getUTCDate(), '/', (d.getUTCMonth() +1), '/', d.getUTCFullYear()].join('');
-	
-	var message = 'Nuevo pedido a las ' + stringDate;
+
+	return formatedDate;
+}
+
+function createPushObject(order) {
+	var formatedDate = createdFormartedDate(order),
+		message = 'Nuevo pedido a las ' + formatedDate,
+		encodedOrder,
+		pushObject;
+
 	console.log('message: %s', message);
-	
-	notification.order.createdAt = stringDate;
-	notification.order.updateddAt = stringDate;
+	order.createdAt = formatedDate;
+	order.updateddAt = formatedDate;
 
-	var encodedOrder = new Buffer(JSON.stringify(notification.order)).toString('base64');
+	encodedOrder = new Buffer(JSON.stringify(order)).toString('base64');
 
-	var pushObject = JSON.stringify({
+	pushObject = JSON.stringify({
 		'where': {
           'deviceType': 'android'
         },
         'data': {
-        	'title': 'Biblos - pedido',
+    	'title': 'Biblos - pedido',
         	'alert': message,
         	'uri': parseConfig.androidUri + '?order=' + encodedOrder
         }
 	});
+	return pushObject;
+}
 
-	var options = {
+function sendNotification(notification) {
+	
+	var pushObject,
+		options,
+		req;
+
+	pushObject = createPushObject(notification.order);
+
+	options = {
 	  hostname: 'api.parse.com',
 	  port: 443,
 	  path: '/1/push',
@@ -50,9 +65,7 @@ function sendNotification(notification) {
 	  }
 	};
 
-	var req = http.request(options, function(res) {
-	  console.log('STATUS: ' + res.statusCode);
-	  console.log('HEADERS: ' + JSON.stringify(res.headers));
+	req = http.request(options, function(res) {
 	  res.setEncoding('utf8');
 	  res.on('data', function (chunk) {
 	    console.log('BODY: ' + chunk);
@@ -63,7 +76,6 @@ function sendNotification(notification) {
 	  console.log('problem with request: ' + e.message);
 	});
 
-	// write data to request body
 	req.write(pushObject);
 	req.end();
 }
@@ -71,20 +83,3 @@ function sendNotification(notification) {
 module.exports = {
 	sendNotification: sendNotification
 }
-
-
-/*
-curl -X POST \
-  -H "X-Parse-Application-Id: czKBuh1GPPruFLnqn7TqRBrahOAz67Kpbq9wD1L3" \
-  -H "X-Parse-REST-API-Key: bPGMbwzQmCgY9Any4CQV6qu6j5ic21pmOaaB6daw" \
-  -H "Content-Type: application/json" \
-  -d '{
-        "where": {
-          "deviceType": "android"
-        },
-        "data": {
-          "alert": "Your suitcase has been filled with tiny robots!"
-        }
-      }' \
-https://api.parse.com/1/push
-*/

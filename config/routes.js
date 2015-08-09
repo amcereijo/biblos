@@ -32,10 +32,6 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  /*'/': {
-    view: 'homepage'
-
-  },*/
   'get /': 'ProductController.order',
 
   /***************************************************************************
@@ -56,16 +52,13 @@ module.exports.routes = {
 
   '/logout': 'AuthController.logout',
 
-  'get /signup': {
-    view: 'signup'
-  },
 
   'get /productsorder': 'ProductController.order',
 
   'get /admin': 'AdminController.admin',
 
   'get /admin/product': 'ProductController.admin',
-  
+
   'get /admin/orders': 'OrderController.admin',
 
   'post /uploadProducts': 'ProductController.uploadFileProducts'

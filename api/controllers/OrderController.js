@@ -29,7 +29,7 @@ function mapOrders(orders) {
 function loadAndShowOrders(res) {
 	Order.find().exec({
 		error: function(err) {
-			console.log('"Errro admin show orders: ' + err);
+			console.log('"Error admin show orders: ' + err);
 			res.view('ordersadmin.ejs', {orders: []});
 		},
 		success: function(orders) {
