@@ -14,7 +14,6 @@
         background-color: #CEE3F6;
         text-align: center;
     }
-
     .bgOdd {
         background-color: #F7F2E0;
     }
@@ -22,7 +21,7 @@
 
 <div class="container">
 	
-	<h2>Administración de pedidos </h2>
+	<h2><a href="/admin">Administración</a> de pedidos </h2>
 
     <hr/>
     <table cellspacing="10">
@@ -30,8 +29,7 @@
             <th>Fecha</th>
             <th>Cliente</th>
             <th>Total</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
+            <th colspan="2">&nbsp;</th>
         </tr>
         <% orders.forEach(function(order, index) { %>
             <tr>
