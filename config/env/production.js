@@ -1,3 +1,5 @@
+var cliParams = require('./cliParams');
+
 /**
  * Production environment settings
  *
@@ -37,8 +39,8 @@ module.exports = {
 
   // parse platform
   parse: {
-    appId: '',
-    httpApiId: '',
+    appId: cliParams.appId,
+    httpApiId: cliParams.httpApiId,
     androidUri: 'biblos://order'
   },
   admin: {
