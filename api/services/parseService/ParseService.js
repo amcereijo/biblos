@@ -26,8 +26,8 @@ function createPushObject(order) {
 		pushObject;
 
 	console.log('message: %s', message);
-	order.createdAt = formatedDate;
-	order.updateddAt = formatedDate;
+		order.createdAt = formatedDate;
+		order.updatedAt = formatedDate;
 
 	encodedOrder = new Buffer(JSON.stringify(order)).toString('base64');
 
