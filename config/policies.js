@@ -26,7 +26,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+   '*': true,
 
   /***************************************************************************
   *                                                                          *
@@ -48,4 +48,26 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
+
+  'ProductController': {
+    'edit':'isAuthenticated',
+    'create': 'isAuthenticated',
+    'delete': 'isAuthenticated',
+    'admin': 'isAuthenticated'
+  },
+
+  'OrderController': {
+    'admin': 'isAuthenticated',
+    'delete': 'isAuthenticated',
+    'edit':'isAuthenticated',
+  },
+
+  'UserController': {
+    '*': 'isAuthenticated'
+  },
+
+  'AdminController': {
+    '*': 'isAuthenticated'
+  }
+ 
 };

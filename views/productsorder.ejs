@@ -1,0 +1,183 @@
+<!-- Default home page -->
+<link type="text/css" href='http://sailsjs.org/styles/fonts.css' rel='stylesheet'/>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
+<style>
+  .table tbody>tr:nth-child(odd){ 
+    background: white;
+  }
+  /*  Define the background color for all the EVEN background rows  */
+  .table tbody>tr:nth-child(even){
+    background: #ddd;
+  }
+  div.row{
+    padding-top: 4px;
+  }
+  .class100Percent {
+    width: 100%
+  }
+  .bodyBiblos {
+    background-image: url('images/biblos.jpg')
+  }
+  .panel {
+    margin-top: 20px;
+  }
+</style>
+
+<!-- Angular Material Dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+
+<!-- Angular Material Javascript now available via Google CDN; version 0.10 used here -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+
+
+<div class="container-fluid bodyBiblos">
+  
+  <div id="main" class="container panel panel-default"  ng-app="biblos" ng-controller="MainController">
+  
+    <div id="head" role="head">
+      <h3>Realizar pedido</h3>
+    </div>
+
+    <div class="panel panel-default" ng-cloak>
+      
+      <div class="panel-heading" ng-init="init(<%=dataUpdate%>)" ng-show="!formData.showClientData">
+          
+        <form class="form-inline" name="formAddProduct">
+          <div  class="row" layout="row" layout-fill >
+            <div flex="25">
+              <label for="selectedProduct">Producto:</label>
+            </div>
+            <div flex="75">
+              <select name="selectAddProduct" id="selectAddProduct" class="form-control" id="selectedProduct" ng-model="formData.selectedProduct" required>
+                  <option ng-repeat="p in formData.products" value="{{$index}}">
+                    {{p.name}} - {{p.price}}€
+                  </option>
+              </select>
+              <button type="button" class="btn btn-primary" ng-click="formData.showAllProducts = !formData.showAllProducts" aria-label="Left Align">
+                  {{!formData.showAllProducts?'Ver todos':'Ocultar'}}
+              </button>
+            </div>
+          </div>
+
+          <div  class="row" layout="row" layout-fill >
+            <div flex="25">
+              <label for="productAmount">Cantidad</label>
+            </div>
+            <div flex="75">
+              <button type="button" class="btn btn-primary" ng-disabled="formData.productAmount==1" ng-click="changeAmmount(-1)" aria-label="Left Align">-</button>
+              {{formData.productAmount}}
+              <button type="button" class="btn btn-primary" ng-disabled="formData.productAmount>9" ng-click="changeAmmount(1)" aria-label="Left Align">+</button>
+            </div>
+          </div>
+
+          <div class="row" layout="row" layout-fill >
+            <div flex="25">
+            </div>
+            <div flex="75">
+            <button type="button"  class="btn btn-success class100Percent" ng-disabled="formAddProduct.$invalid" ng-click="addProduct()">Añadir</button>
+            </div>
+          </div>
+        </form>
+      </div>  
+      <div class="panel-body" ng-show="!formData.showClientData">
+        <!-- Table -->
+        <table class="table" ng-show="formData.showAllProducts">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Observaciones</th>
+              <th>Precio</th>
+              <th></th>
+            </tr>
+          </thead>
+          
+          <tbody>
+            <tr ng-repeat="p in formData.products" ng-click="selectProduct($index)">
+              <th scope="row">{{p.id}}</th> <!-- remove show value -->
+              <td>{{p.name}}</td>
+              <td>{{p.observations}}</td>
+              <td>{{p.price}}€</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+    <div class="panel-heading" ng-show="!formData.showClientData" ng-cloak>
+      Pedido    
+    </div>  
+    <div class="panel-body" ng-show="!formData.showClientData" ng-cloak>
+      <!-- Table -->
+      <table class="table" id="orderTable">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="o in formData.orders" ng-class="">
+            <td>{{o.product.name}}</td>
+            <td>{{o.product.price}}€</td>
+            <td>{{o.amount}}</td>
+            <td>{{o.product.price * o.amount}}€</td>
+            <td><button type="button" class="btn btn-danger" ng-click="removeProduct(o)">-</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="text-right">
+        <button type="button" class="btn btn-success" ng-disabled="formData.orderTableDisabled" ng-click="passToClientData(true)">Realizar Pedido</button>
+      </p>
+      
+    </div>
+
+
+    <div class="panel-heading"  ng-cloak ng-show="formData.showClientData">
+      
+      <div  class="row" layout="row" layout-fill >
+        <div flex="30">
+          <label for="clientName">Tu nombre:</label>
+        </div>
+        <div flex="70">
+          <input type="text" placeholder="tu nombre" ng-model="formData.clientName" value=""/>
+        </div>
+      </div>
+
+      <div  class="row" layout="row" layout-fill >
+        <div flex="30">
+          <label for="clientComments">Agrega un comentario</label>
+        </div>
+        <div flex="70">
+          <textarea placeholder="¿Donde estás?, ¿cómo te reconozco?" ng-model="formData.clientComments"></textarea>
+        </div>
+      </div>
+
+      <div  class="row" layout="row" layout-fill >
+        <div flex="100">
+          <p class="text-right">
+            <button type="button" class="btn btn-cancel" ng-click="passToClientData(false)">Cancelar</button>
+          </p>  
+          <p class="text-right">
+            <button type="button" class="btn btn-success" ng-click="makeOrder()" ng-disabled="checkOwnData()">Confirmar Pedido</button>
+          </p>
+        </div>
+      </div>
+
+    </div>  
+    <br/>
+
+  
+  </div>
+
+
+
+</div>
