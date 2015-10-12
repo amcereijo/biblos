@@ -1,3 +1,4 @@
+var cliParams = require('./cliParams');
 /**
  * Development environment settings
  *
@@ -9,7 +10,6 @@
  * any private information to this file!
  *
  */
-
 module.exports = {
 
   /***************************************************************************
@@ -23,13 +23,13 @@ module.exports = {
 
   // parse platform
   parse: {
-  	appId: '',
-  	httpApiId: '',
+  	appId: cliParams.appId || '',
+  	httpApiId: cliParams.httpApiId || '',
   	androidUri: 'biblos://order'
   },
   admin: {
-    user: '',
-    password: ''
+    user: 'admin',
+    password: 'admin'
   }
 
 };
