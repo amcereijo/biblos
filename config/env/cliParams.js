@@ -1,15 +1,16 @@
-var params = {} ;
+var params = {
+	appId: '',
+	httpApiId: '',
+	adminUser: '',
+	adminPass: ''
+};
+var key;
+console.log('process.env: ', process.env);
 
-console.log('args.params: ', process.argv);
-process.argv.forEach(function (val, index, array) {
-	var pos = val.indexOf('=');
-	var name;
-	var value;
-	if(pos > 0) {
-		name = val.substring(0, pos);
-		value = val.substring(pos +1);
-		params[name] = value;
+for(key in params) {
+	if(process.env[key]) {
+		params[key] = process.env[key];
 	}
-});
+}
 
 module.exports = params;
