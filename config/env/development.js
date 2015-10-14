@@ -10,7 +10,7 @@ var cliParams = require('./cliParams');
  * any private information to this file!
  *
  */
- console.log('Pre start with: ', cliParams);
+ console.log('Pre start with: ', process.env);
 module.exports = {
 
   /***************************************************************************
@@ -24,8 +24,8 @@ module.exports = {
 
   // parse platform
   parse: {
-  	appId: cliParams.appId || '',
-  	httpApiId: cliParams.httpApiId || '',
+  	appId: process.env.appId || '',
+  	httpApiId: process.env.httpApiId || '',
   	androidUri: 'biblos://order'
   },
   admin: {

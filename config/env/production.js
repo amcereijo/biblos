@@ -12,7 +12,7 @@ var cliParams = require('./cliParams');
  *
  */
 
-console.log('Production start with: ', cliParams);
+console.log('Production start with: ', process.env);
 module.exports = {
 
   /***************************************************************************
@@ -40,8 +40,8 @@ module.exports = {
 
   // parse platform
   parse: {
-    appId: cliParams.appId,
-    httpApiId: cliParams.httpApiId,
+    appId: process.env.appId,
+    httpApiId: process.env.httpApiId,
     androidUri: 'biblos://order'
   },
   admin: {
