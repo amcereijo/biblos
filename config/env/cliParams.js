@@ -1,5 +1,6 @@
 var params = {} ;
 
+console.log('args.params: ', process.argv);
 process.argv.forEach(function (val, index, array) {
 	var pos = val.indexOf('=');
 	var name;

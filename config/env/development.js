@@ -10,6 +10,7 @@ var cliParams = require('./cliParams');
  * any private information to this file!
  *
  */
+ console.log('Pre start with: ', cliParams);
 module.exports = {
 
   /***************************************************************************
