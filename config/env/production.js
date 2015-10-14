@@ -12,6 +12,7 @@ var cliParams = require('./cliParams');
  *
  */
 
+console.log('Production start with: ', cliParams);
 module.exports = {
 
   /***************************************************************************
@@ -49,3 +50,5 @@ module.exports = {
   }
 
 };
+
+ //sails lift appId=czKBuh1GPPruFLnqn7TqRBrahOAz67Kpbq9wD1L3 httpApiId: httpApiId=bPGMbwzQmCgY9Any4CQV6qu6j5ic21pmOaaB6daw
