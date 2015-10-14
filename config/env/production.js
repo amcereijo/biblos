@@ -45,8 +45,8 @@ module.exports = {
     androidUri: 'biblos://order'
   },
   admin: {
-    user: '',
-    password: ''
+    user: cliParams.adminUser,
+    password: cliParams.adminPass
   }
 
 };
