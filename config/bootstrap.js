@@ -1,18 +1,23 @@
 var fs = require('fs');
 
 function addProductsFromFile() {
-	var products = fs.readFileSync('products.json', 'utf8');
+	var products;
  	var productsObject;
  	var product, i;
- 	if(products) {
- 		productsObject = JSON.parse(products);
-	 	for(i=0;i<productsObject.length;i++) {
-	 		product = productsObject[i];
-	 		console.log('Inserting product: ', product);
-			Product.create(product).exec(function createCB(err, createdProduct){
-				console.log('Created product: %s' + JSON.stringify(createdProduct));
-			});
+ 	try{
+ 		products = fs.readFileSync('products.json', 'utf8');
+	 	if(products) {
+	 		productsObject = JSON.parse(products);
+		 	for(i=0;i<productsObject.length;i++) {
+		 		product = productsObject[i];
+		 		console.log('Inserting product: ', product);
+				Product.create(product).exec(function createCB(err, createdProduct){
+					console.log('Created product: %s' + JSON.stringify(createdProduct));
+				});
+		 	}
 	 	}
+ 	} catch(err) {
+ 		console.log('Not products.json');
  	}
 }
 
