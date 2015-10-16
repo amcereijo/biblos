@@ -20,6 +20,18 @@ function loadAndShowProducts(res) {
 	});
 }
 
+function saveInFileProduct(products) {
+	var product;
+	fs.writeFile('products.json', JSON.stringify(products), function (err) {
+  		if (err) throw err;
+  		console.log('It\'s saved!');
+	});
+	fs.readFile('products.json', 'utf8', function (err, data) {
+	  if (err) throw err;
+	  console.log('Readed:',JSON.parse(data));
+	});
+}
+
 function createProducts(uploadedFile, res) {
 	console.log('file: ' + JSON.stringify(uploadedFile));
 	var rdInstance = readline.createInterface({
@@ -27,6 +39,7 @@ function createProducts(uploadedFile, res) {
 	    output: process.stdout,
 	    terminal: false
 	});
+	var productsObject = [];
 
 	rdInstance.on('line', function(line) {
 	    var data = line.split(':'),
@@ -37,15 +50,17 @@ function createProducts(uploadedFile, res) {
 
 	    console.log('Product:%s - Price:%s', productName, price);
 	    product = {name: productName, price: price, desc: desc};
+	    productsObject.push(product);
 		Product.create(product).exec(function createCB(err, createdProduct){
 		  console.log('Created product: %s' + JSON.stringify(createdProduct));
 		});
 	});
 
 	rdInstance.on('close', function(line) {
+		saveInFileProduct(productsObject);
 	    console.log('END!!');
 	    res.redirect('/admin/product');
-	});	
+	});
 }
 
 function removeAllProducts(uploadedFile, res) {
