@@ -33,8 +33,6 @@ function addProductsFromFile() {
  */
 
 module.exports.bootstrap = function(cb) {
-  	console.log('this runs at startup!');
-
   	Product.find().exec({
 		error: function(err) {
 			console.log('"Errro admin.getProducts: ' + err);
