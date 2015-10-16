@@ -1,8 +1,8 @@
 var params = {
 	appId: '',
 	httpApiId: '',
-	adminUser: '',
-	adminPass: ''
+	adminUser: 'admin',
+	adminPass: 'admin'
 };
 var key;
 console.log('process.env: ', process.env);
