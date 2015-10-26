@@ -1,3 +1,8 @@
+var environment = process.env.ENV_VARIABLE || 'development';
+  config = require('./env/' + environment );
+
+
+console.log('\n\n\n CONFIG: ', config.postgress);
 /**
  * Connections
  * (sails.config.connections)
@@ -76,10 +81,12 @@ module.exports.connections = {
   ***************************************************************************/
   somePostgresqlServer: {
     adapter: 'sails-postgresql',
-    host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
-    user: 'YOUR_POSTGRES_USER',
-    password: 'YOUR_POSTGRES_PASSWORD',
-    database: 'YOUR_POSTGRES_DB'
+    host: config.postgress.host,
+    user: config.postgress.user,
+    password: config.postgress.password,
+    database: config.postgress.database,
+    port: 5432,
+    ssl: true
   }
 
 

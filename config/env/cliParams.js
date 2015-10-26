@@ -3,11 +3,10 @@ var params = {
 	httpApiId: '',
 	adminUser: 'admin',
 	adminPass: 'admin',
-    postgressHost: '',,
+    postgressHost: '',
     postgressUser: '',
     postgressPass: '',
     postgressDb: ''
-  }
 };
 var key;
 console.log('process.env: ', process.env);
