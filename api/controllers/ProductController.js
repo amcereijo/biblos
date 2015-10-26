@@ -20,17 +20,6 @@ function loadAndShowProducts(res) {
 	});
 }
 
-function saveInFileProduct(products) {
-	var product;
-	fs.writeFile('products.json', JSON.stringify(products), function (err) {
-  		if (err) throw err;
-  		console.log('It\'s saved!');
-	});
-	fs.readFile('products.json', 'utf8', function (err, data) {
-	  if (err) throw err;
-	  console.log('Readed:',JSON.parse(data));
-	});
-}
 
 function createProducts(uploadedFile, res) {
 	console.log('file: ' + JSON.stringify(uploadedFile));
@@ -57,7 +46,6 @@ function createProducts(uploadedFile, res) {
 	});
 
 	rdInstance.on('close', function(line) {
-		saveInFileProduct(productsObject);
 	    console.log('END!!');
 	    res.redirect('/admin/product');
 	});

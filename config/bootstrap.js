@@ -1,26 +1,3 @@
-var fs = require('fs');
-
-function addProductsFromFile() {
-	var products;
- 	var productsObject;
- 	var product, i;
- 	try{
- 		products = fs.readFileSync('products.json', 'utf8');
-	 	if(products) {
-	 		productsObject = JSON.parse(products);
-		 	for(i=0;i<productsObject.length;i++) {
-		 		product = productsObject[i];
-		 		console.log('Inserting product: ', product);
-				Product.create(product).exec(function createCB(err, createdProduct){
-					console.log('Created product: %s' + JSON.stringify(createdProduct));
-				});
-		 	}
-	 	}
- 	} catch(err) {
- 		console.log('Not products.json');
- 	}
-}
-
 /**
  * Bootstrap
  * (sails.config.bootstrap)
@@ -33,17 +10,6 @@ function addProductsFromFile() {
  */
 
 module.exports.bootstrap = function(cb) {
-  	Product.find().exec({
-		error: function(err) {
-			console.log('"Errro admin.getProducts: ' + err);
-			addProductsFromFile();
-		},
-		success: function(products) {
-			if(!products || products.length === 0) {
-				addProductsFromFile();
-			}
-		}
-	});
 
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
