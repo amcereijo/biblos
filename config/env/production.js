@@ -12,7 +12,6 @@ var cliParams = require('./cliParams');
  *
  */
 
-console.log('Production start with: ', cliParams);
 module.exports = {
 
   /***************************************************************************
@@ -47,8 +46,13 @@ module.exports = {
   admin: {
     user: cliParams.adminUser,
     password: cliParams.adminPass
+  },
+  postgress: {
+    host: cliParams.postgressHost,
+    user: cliParams.postgressUser,
+    password: cliParams.postgressPass,
+    database: cliParams.postgressDb
   }
 
 };
 
- //sails lift appId=czKBuh1GPPruFLnqn7TqRBrahOAz67Kpbq9wD1L3 httpApiId: httpApiId=bPGMbwzQmCgY9Any4CQV6qu6j5ic21pmOaaB6daw

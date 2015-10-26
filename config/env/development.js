@@ -10,7 +10,6 @@ var cliParams = require('./cliParams');
  * any private information to this file!
  *
  */
- console.log('Pre start with: ', cliParams);
 module.exports = {
 
   /***************************************************************************
@@ -31,6 +30,12 @@ module.exports = {
   admin: {
     user: cliParams.adminUser,
     password: cliParams.adminPass
+  },
+  postgress: {
+    host: cliParams.postgressHost,
+    user: cliParams.postgressUser,
+    password: cliParams.postgressPass,
+    database: cliParams.postgressDb
   }
 
 };
