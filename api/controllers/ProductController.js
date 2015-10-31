@@ -28,7 +28,8 @@ function createProducts(uploadedFile, res) {
 	    output: process.stdout,
 	    terminal: false
 	});
-	var productsObject = [];
+	var productsSize = 0;
+	var productsInserted = 0;
 
 	rdInstance.on('line', function(line) {
 	    var data = line.split(':'),
@@ -39,15 +40,18 @@ function createProducts(uploadedFile, res) {
 
 	    console.log('Product:%s - Price:%s', productName, price);
 	    product = {name: productName, price: price, desc: desc};
-	    productsObject.push(product);
+	    productsSize++;
 		Product.create(product).exec(function createCB(err, createdProduct){
-		  console.log('Created product: %s' + JSON.stringify(createdProduct));
+		  console.log('Controllersreated product: %s' + JSON.stringify(createdProduct));
+		  productsInserted++;
+		  if(productsInserted === productsSize) {
+		  	res.redirect('/admin/product');
+		  }
 		});
 	});
 
 	rdInstance.on('close', function(line) {
 	    console.log('END!!');
-	    res.redirect('/admin/product');
 	});
 }
 
