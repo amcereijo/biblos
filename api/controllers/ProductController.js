@@ -89,6 +89,18 @@ module.exports = {
 				}
 				removeAllProducts(uploadedFiles[0], res);
 		});
+	},
+	create: function(req, res) {
+		console.log('Create product! ', req.param('name'));
+		var product = {
+			name: req.param('name'),
+			price: req.param('price').replace(',', '.'),
+			desc: req.param('desc')
+		};
+		Product.create(product).exec(function createCB(err, createdProduct){
+		  console.log('Controllersreated product: %s' + JSON.stringify(createdProduct));
+		  res.redirect('/admin/product');
+		});
 	}
 };
 
