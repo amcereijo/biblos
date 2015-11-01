@@ -61,7 +61,9 @@ module.exports.routes = {
 
   'get /admin/orders': 'OrderController.admin',
 
-  'post /uploadProducts': 'ProductController.uploadFileProducts'
+  'post /uploadProducts': 'ProductController.uploadFileProducts',
+
+  'post /product/delete': 'ProductController.deleteProduct'
 
 
 };

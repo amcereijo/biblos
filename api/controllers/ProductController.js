@@ -101,6 +101,13 @@ module.exports = {
 		  console.log('Controllersreated product: %s' + JSON.stringify(createdProduct));
 		  res.redirect('/admin/product');
 		});
+	},
+	deleteProduct: function(req, res) {
+		var id = req.param('id');
+		Product.destroy({id: id}).exec(function (err) {
+			console.log('Delete product');
+			res.redirect('/admin/product');
+		});
 	}
 };
 

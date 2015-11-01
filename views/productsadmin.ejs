@@ -59,8 +59,15 @@
             <tr>
                 <td class="<%= index%2===0? '' : 'bgOdd' %>"><%= product.name %></td>
                 <td class="<%= index%2===0? '' : 'bgOdd' %>"><%= product.price %>€</td>
-                <td class="<%= index%2===0? '' : 'bgOdd' %>"> <input type="button" class="btn btn-primary editProduct" value="Editar"> </td>
-                <td class="<%= index%2===0? '' : 'bgOdd' %>"> <input type="button" class="btn btn-danger deleteProduct" value="Borrar"> </td>
+                <td class="<%= index%2===0? '' : 'bgOdd' %>">
+                    <input type="button" class="btn btn-primary editProduct" value="Editar">
+                </td>
+                <td class="<%= index%2===0? '' : 'bgOdd' %>">
+                    <form class="form" action="/product/delete" method="post">
+                        <input type="hidden", value="<%= product.id %>" name="id">
+                        <input type="submit" class="btn btn-danger deleteProduct" value="Borrar">
+                    </form>
+                </td>
             </tr>
         <% }); %>
     </table>
