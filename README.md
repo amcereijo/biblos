@@ -10,12 +10,12 @@ For push notifications, it are using [Parse](https://www.parse.com/).
 
 ##To start using
 Set environment settings neeed to start app:
- * appId:app id in parse system
- * httpApiId:http Api id in parse system
- * postgressHost:postress host
- * postgressUser:postress user
- * postgressPass:postress pass
- * postgressDb:postress data base name
+  * appId:app id in parse system
+  * httpApiId:http Api id in parse system
+  * postgressHost:postress host
+  * postgressUser:postress user
+  * postgressPass:postress pass
+  * postgressDb:postress data base name
 
 Run command: 
 >```sails lift```
