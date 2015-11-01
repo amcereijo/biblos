@@ -17,6 +17,12 @@
     .bgOdd {
         background-color: #F7F2E0;
     }
+    input{
+        border: 0px;
+    }
+    input.bg {
+        background-color: #CEE3F6;
+    }
 </style>
 
 <div class="container">
@@ -39,7 +45,7 @@
         <input type="text" id="name" name="name" class="form-control" placeholder="nombre" required="true" autofocus="">
 
         <label for="price" class="sr-only">Precio</label>
-        <input type="text" id="price" name="price" placeholder="1.30" class="form-control" required="true" autofocus="">
+        <input type="text" id="price" name="price" placeholder="precio Ej: 1.30" class="form-control" required="true" autofocus="">
         <label for="name" class="sr-only">Nombre</label>
         <input type="text" id="desc" name="desc" class="form-control" placeholder="descripcion" autofocus="">
         <br/>
@@ -53,15 +59,14 @@
         <tr>
             <th>Producto</th>
             <th>Precio</th>
+            <th>Descripción</th>
             <th colspan="2">&nbsp;</th>
         </tr>
         <% products.forEach(function(product, index) { %>
             <tr>
                 <td class="<%= index%2===0? '' : 'bgOdd' %>"><%= product.name %></td>
                 <td class="<%= index%2===0? '' : 'bgOdd' %>"><%= product.price %>€</td>
-                <td class="<%= index%2===0? '' : 'bgOdd' %>">
-                    <input type="button" class="btn btn-primary editProduct" value="Editar">
-                </td>
+                <td class="<%= index%2===0? '' : 'bgOdd' %>"><%= product.desc %></td>
                 <td class="<%= index%2===0? '' : 'bgOdd' %>">
                     <form class="form" action="/product/delete" method="post">
                         <input type="hidden", value="<%= product.id %>" name="id">
